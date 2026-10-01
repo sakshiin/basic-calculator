@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Precision Calculator - Modern Glassmorphism Calculator</title>
+  <meta name="description" content="A modern, premium, responsive calculator with dark glassmorphism styling, chained arithmetic operations, keyboard navigation, and precision calculations.">
+  <meta property="og:title" content="Precision Calculator - Modern Glassmorphism Calculator">
+  <meta property="og:description" content="A modern, premium, responsive calculator with dark glassmorphism styling, chained arithmetic operations, keyboard navigation, and precision calculations.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="style.css">
+  <script defer src="script.js"></script>
+</head>
+<body>
+  <!-- Ambient background lighting for glassmorphism depth -->
+  <div class="ambient-glow ambient-glow-top" aria-hidden="true"></div>
+  <div class="ambient-glow ambient-glow-bottom" aria-hidden="true"></div>
+
+  <div class="app-viewport">
+    <main class="calculator-card" role="region" aria-label="Precision Calculator">
+      <!-- Calculator Header -->
+      <header class="calc-header">
+        <div class="brand-zone">
+          <span class="brand-dot" aria-hidden="true"></span>
+          <h1 class="brand-title">PRECISION</h1>
+        </div>
+        <div class="header-actions">
+          <button 
+            type="button" 
+            class="header-btn" 
+            id="history-toggle-btn" 
+            aria-label="Toggle calculation history"
+            title="History (H)">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+          </button>
+          <button 
+            type="button" 
+            class="header-btn" 
+            id="copy-btn" 
+            aria-label="Copy current value to clipboard"
+            title="Copy Result">
+            <svg class="icon icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+            </svg>
+            <span class="copy-feedback" id="copy-feedback" role="status" aria-live="polite">Copied!</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Calculator Display Screen -->
+      <section class="display-panel" aria-label="Calculation Screen">
+        <div class="expression-row" id="expression-display" aria-live="polite" aria-label="Current expression"></div>
+        <div class="result-row">
+          <span class="error-badge" id="error-badge" role="alert" aria-hidden="true"></span>
+          <output class="current-value" id="current-display" aria-live="assertive" aria-label="Current value">0</output>
+        </div>
+      </section>
+
+      <!-- Keypad Grid: 4 columns x 5 rows -->
+      <div class="keypad-grid" role="group" aria-label="Calculator Keypad">
+        <!-- Row 1: Utility & Division -->
+        <button type="button" class="calc-btn btn-fn btn-clear" data-action="clear" data-key="Escape" aria-label="All Clear">AC</button>
+        <button type="button" class="calc-btn btn-fn btn-delete" data-action="delete" data-key="Backspace" aria-label="Delete last digit">
+          <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path>
+            <line x1="18" y1="9" x2="12" y2="15"></line>
+            <line x1="12" y1="9" x2="18" y2="15"></line>
+          </svg>
+        </button>
+        <button type="button" class="calc-btn btn-fn" data-action="percentage" data-key="%" aria-label="Percentage">%</button>
+        <button type="button" class="calc-btn btn-op" data-operator="÷" data-key="/" aria-label="Divide">÷</button>
+
+        <!-- Row 2: 7, 8, 9, Multiplication -->
+        <button type="button" class="calc-btn btn-num" data-num="7" data-key="7" aria-label="7">7</button>
+        <button type="button" class="calc-btn btn-num" data-num="8" data-key="8" aria-label="8">8</button>
+        <button type="button" class="calc-btn btn-num" data-num="9" data-key="9" aria-label="9">9</button>
+        <button type="button" class="calc-btn btn-op" data-operator="×" data-key="*" aria-label="Multiply">×</button>
+
+        <!-- Row 3: 4, 5, 6, Subtraction -->
+        <button type="button" class="calc-btn btn-num" data-num="4" data-key="4" aria-label="4">4</button>
+        <button type="button" class="calc-btn btn-num" data-num="5" data-key="5" aria-label="5">5</button>
+        <button type="button" class="calc-btn btn-num" data-num="6" data-key="6" aria-label="6">6</button>
+        <button type="button" class="calc-btn btn-op" data-operator="−" data-key="-" aria-label="Subtract">−</button>
+
+        <!-- Row 4: 1, 2, 3, Addition -->
+        <button type="button" class="calc-btn btn-num" data-num="1" data-key="1" aria-label="1">1</button>
+        <button type="button" class="calc-btn btn-num" data-num="2" data-key="2" aria-label="2">2</button>
+        <button type="button" class="calc-btn btn-num" data-num="3" data-key="3" aria-label="3">3</button>
+        <button type="button" class="calc-btn btn-op" data-operator="+" data-key="+" aria-label="Add">+</button>
+
+        <!-- Row 5: Sign Toggle, 0, Decimal, Equals -->
+        <button type="button" class="calc-btn btn-fn" data-action="toggle-sign" data-key="±" aria-label="Negate value">±</button>
+        <button type="button" class="calc-btn btn-num" data-num="0" data-key="0" aria-label="0">0</button>
+        <button type="button" class="calc-btn btn-num" data-action="decimal" data-key="." aria-label="Decimal point">.</button>
+        <button type="button" class="calc-btn btn-eq" data-action="equals" data-key="Enter" aria-label="Equals">=</button>
+      </div>
+
+      <!-- Keyboard shortcuts helper footer -->
+      <footer class="calc-footer">
+        <span class="keyboard-hint" aria-hidden="true">Keys: 0-9 · + - * / · Enter · Backspace · Esc</span>
+      </footer>
+
+      <!-- Sliding History Drawer -->
+      <aside class="history-drawer" id="history-drawer" aria-label="Calculation History" aria-hidden="true">
+        <div class="history-header">
+          <h2 class="history-title">History</h2>
+          <div class="history-header-actions">
+            <button type="button" class="history-clear-btn" id="history-clear-btn" aria-label="Clear history">Clear</button>
+            <button type="button" class="history-close-btn" id="history-close-btn" aria-label="Close history">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div class="history-body" id="history-list" role="list">
+          <div class="history-empty" id="history-empty">No calculations yet</div>
+        </div>
+      </aside>
+    </main>
+  </div>
+</body>
+</html>
